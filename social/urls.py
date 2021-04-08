@@ -11,6 +11,7 @@ urlpatterns = [
 	path('register/', views.registro, name='registro'),
 	path('login/', LoginView.as_view(template_name='social/login.html'), name='login'),
 	path('logout/', LogoutView.as_view(template_name='social/logout.html'), name='logout'),
+	path('post/', views.post, name='post'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
