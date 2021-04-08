@@ -6,7 +6,7 @@
 {% for post in posts %}
 <article>
     <div class="container-article">
-        <img src="../../static/foto_perfil.png">
+        <img src="{{ post.user.profile.imagenes.url }}">
         <div>
             <h2 class="username"><a href="#">@{{ post.user.username }}</a></h2>
             <i class="clock"></i>

@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)#Conectaos esta fila a la tabla Usuarios de los modelos por defecto de django
-
+	imagenes = models.ImageField(default='foto_perfil.png')
 	def __str__(self):
 		return f'Perfil de {self.user.username}' #definimos una cadena de caracteres para poder ser mas visual en el admin de django
 
