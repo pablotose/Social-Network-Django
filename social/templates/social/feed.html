@@ -1,16 +1,20 @@
 {% extends 'social/layout.html' %}
 
 {% block content %}
+
+
+{% for post in posts %}
 <article>
     <div class="container-article">
         <img src="../../static/foto_perfil.png">
         <div>
-            <h2 class="username"><a href="#">@death</a></h2>
+            <h2 class="username"><a href="#">@{{ post.user.username }}</a></h2>
             <i class="clock"></i>
-            <time data-time="#">5 seconds ago</time>
-            <div class="post">Prueba del feed</div>
+            <time data-time="#">{{ post.timestamp }}</time>
+            <div class="post">{{ post.content }}</div>
         </div>
     </div>
 </article>
+{% endfor %}
 
 {% endblock %}
