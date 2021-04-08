@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm, PostForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 # Create your views here.
 def feed(request):
@@ -10,8 +11,15 @@ def feed(request):
 	context = {'posts': posts}
 	return render(request, 'social/feed.html', context)
 
-def profile(request):
-	return render(request, 'social/profile.html')
+def profile(request, username=None):
+	current_user = request.user
+	if username and username != current_user.username: #revisamos a que usuarios queremos ver
+		user = User.objects.get(username=username)
+		posts = user.posts.all()
+	else:
+		posts = current_user.posts.all()
+		user = current_user
+	return render(request, 'social/profile.html', {'user':user, 'posts':posts})
 
 def registro(request):
 	if request.method == 'POST':
@@ -42,5 +50,5 @@ def post(request):
 	else:
 		form = PostForm()
 
-	
+
 	return render(request, 'social/post.html', {'form': form})
