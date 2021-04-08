@@ -21,10 +21,13 @@
 		</nav>
 	</header>
 
-	<!-------------------------------------
-					Messages 
-	-------------------------------------->
-
+{% if messages %}
+	{% for message in messages %}
+		<div class="notification {{ message.tags}}">
+			{{ message }}
+		</div>
+	{% endfor %}
+{% endif %}
 	<!-------------------------------------
 					Navigation Bar 
 	-------------------------------------->
