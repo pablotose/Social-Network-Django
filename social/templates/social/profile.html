@@ -5,7 +5,21 @@
 <div class="profile">
 	<img src="{{ user.profile.imagenes.url }}">
 	<h2>@{{ user.username }}</h2>
-	<button><a class="follow-button" href="#">Follow</a></button>
+
+	{% if request.user.is_authenticated %}
+		{% if user.username != request.user.username %}
+			{% if user not in request.user.profile.following %}
+
+			<button><a class="follow-button" href="{% url 'follow' user %}">Seguir</a></button>
+
+			{% else %}
+			
+			<button><a class="follow-button" href="{% url 'unfollow' user %}">Dejar de seguir</a></button>
+
+			{% endif %}
+		{% endif %}
+	{% endif %}
+	
 </div>
 
 <!-- Follow items -->
@@ -16,12 +30,12 @@
 	</div>
 	<div>
 		<h5>Seguidores</h5>
-		<p>0</p>
+		<p>{{ user.profile.followers.count }}</p>
 
 	</div>
 	<div>
 		<h5>Siguiendo</h5>
-		<p>0</p>
+		<p>{{ user.profile.following.count }}</p>
 	</div>
 </div>
 

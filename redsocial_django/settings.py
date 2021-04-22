@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social.apps.SocialConfig',
+    'django_cassandra_engine',
+    'buscador.apps.BuscadorConfig',
 
 ]
 
@@ -78,8 +80,24 @@ WSGI_APPLICATION = 'redsocial_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'redsocialdjango',
+        'USER': 'superuser',
+        'PASSWORD': 'superpaul7',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+    'cassandra': {
+        'ENGINE': 'django_cassandra_engine',
+        'NAME': 'db',
+        'TEST_NAME': 'test_db',
+        'HOST': 'localhost',
+        'OPTIONS': {
+            'replication': {
+                'strategy_class': 'SimpleStrategy',
+                'replication_factor': 1
+            }
+        }
     }
 }
 
@@ -132,3 +150,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = 'feed'
+LOGIN_URL = 'login'
+
+CASSANDRA_FALLBACK_ORDER_BY_PYTHON = True

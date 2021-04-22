@@ -1,17 +1,32 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm, PostForm
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 # Create your views here.
+
+
+
 def feed(request):
+	#queryset = request.GET.get("buscar")
+	#print(queryset)
 	posts = Post.objects.all()
 	context = {'posts': posts}
+	#if queryset:
+	#	perfil = User.objects.filter(
+#			Q(username = queryset),
+			#Q( = queryset)
+#		).distinct()
 	return render(request, 'social/feed.html', context)
 
 def profile(request, username=None):
+	queryset = request.GET.get("buscar")
+	print(queryset)
+	if queryset:
+		perfil = User.objects.filter(Q(username = queryset)).distinct()
 	current_user = request.user
 	if username and username != current_user.username: #revisamos a que usuarios queremos ver
 		user = User.objects.get(username=username)
@@ -36,7 +51,7 @@ def registro(request):
 
 	return render(request, 'social/registro.html', context)
 
-
+@login_required
 def post(request):
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	if request.method == 'POST':
@@ -52,3 +67,23 @@ def post(request):
 
 
 	return render(request, 'social/post.html', {'form': form})
+
+
+def follow(request, username):
+	current_user = request.user
+	to_user = User.objects.get(username=username)
+	to_user_id = to_user
+	rel = Relationship(from_user=current_user, to_user=to_user_id)
+	rel.save()
+	messages.success(request, f'sigues a {username}')
+	return redirect('feed')
+
+def unfollow(request, username):
+	current_user = request.user
+	to_user = User.objects.get(username=username)
+	to_user_id = to_user
+	rel = Relationship.objects.filter(from_user=current_user.id, to_user=to_user_id).get()
+	rel.delete()
+	messages.success(request, f'dejaste de seguir a {username}')
+	return redirect('feed')
+

@@ -22,6 +22,23 @@
 				{% endif %}
 			</ul>
 		</nav>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12- search">
+					<form method="get">
+						<div id="custom-search-input">
+							<div class="input-group col-md-12">
+								<input type="text" class="form-control" placeholder="buscar" name="buscar">
+								<span class="input-group-list">
+									<i class="icon icon-search"></i>
+									<button type="submit" class="boton btn-success"></button>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</header>
 
 {% if messages %}
@@ -39,7 +56,7 @@
 		<nav class="second-nav">
 			<a class="feed" href="{% url 'feed' %}">Inicio</a>
 			{% if request.user.is_authenticated %}
-			<a class="profile" href="#">Mi Perfil</a>
+			<a class="profile" href="{% url 'profile' request.user.username %}">Mi Perfil</a>
 			<a class="new" href="{% url 'post' %}">Crear nuevo post</a>
 			{% endif %}
 
