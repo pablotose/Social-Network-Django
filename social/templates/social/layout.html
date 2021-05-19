@@ -13,6 +13,7 @@
 	<header class="main-head">
 		<nav class="main">
 			<h1 id="logo">Red Social Django</h1>
+			<li><a href="{% url 'search' %}">Buscador</a></li>
 			<ul>
 				{% if request.user.is_authenticated %}
 				<li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
@@ -22,23 +23,6 @@
 				{% endif %}
 			</ul>
 		</nav>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12- search">
-					<form method="get">
-						<div id="custom-search-input">
-							<div class="input-group col-md-12">
-								<input type="text" class="form-control" placeholder="buscar" name="buscar">
-								<span class="input-group-list">
-									<i class="icon icon-search"></i>
-									<button type="submit" class="boton btn-success"></button>
-								</span>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
 	</header>
 
 {% if messages %}
