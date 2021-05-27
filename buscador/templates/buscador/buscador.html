@@ -12,12 +12,12 @@
     </form>
 
   {% if usuario %}
-    <h2>Results for "{{ user }}":</h2>
+    <h2>Resultados de : "{{ user }}":</h2>
 
     {% if usuario %}
       <ul>
       {% for user in usuario %}
-        <li><a href="{% url 'profile' user.username %}">{{ user|escape }}</a></l1>
+        <li><a href="{% url 'profile' user.username %}">{{ user.2|escape }}</a></l1>
       {% endfor %}
       </ul>
     {% else %}

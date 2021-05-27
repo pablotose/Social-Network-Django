@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django_cassandra_engine',
         'NAME': 'db',
         'TEST_NAME': 'test_db',
-        'HOST': 'localhost',
+        'HOST': '84.122.138.226',
         'OPTIONS': {
             'replication': {
                 'strategy_class': 'SimpleStrategy',

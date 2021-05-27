@@ -9,13 +9,20 @@ from cassandra.cluster import Cluster
 
 # Create your views here.
 
-cluster = Cluster(['127.0.0.1'])
+cluster = Cluster(['84.122.138.226'])
 
 
-def lista_usuarios(request):
+def lista_usuarios(request, username=None):
 	q = request.GET.get('q', '')
-	usuario = Usuarios_buscador.objects.filter(username=q)
-	contexto = {'usuario': usuario}
-	return render(request, 'buscador/buscador.html', contexto)
+	session = cluster.connect()
+	session.set_keyspace("db")
+	if q:
+		usuario = session.execute("SELECT * from Usuarios_buscador where username like '{}%'".format(q))
+		contexto = {'usuario': usuario}
+		return render(request, 'buscador/buscador.html', contexto)
+	else:
+		usuario = session.execute("SELECT * from Usuarios_buscador")
+		contexto = {'usuario': usuario}
+		return render(request, 'buscador/buscador.html', contexto)
 
 
